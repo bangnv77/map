@@ -1,4 +1,7 @@
-p>
+<h1>New User</h1>
+<%= link_to 'Edit', edit_user_path(@user), class: 'button btn btn-info' %> | <%= link_to 'Back', users_path, class: 'button btn btn-success' %>
+
+<p>
   <strong>Latitude:</strong>
   <%= @user.latitude %>
 </p>
@@ -19,5 +22,26 @@ p>
   <%= @user.title %>
 </p>
 
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> | <%= link_to 'Back', users_path %>
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat": 0,
+      "lng": 0,
+      "picture": {
+        "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
+        "width":  32,
+        "height": 32
+      },
+      "infowindow": "hello!"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  });
+</script>
