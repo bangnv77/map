@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
+  end
+
+  def show
   end
 
   def new
@@ -16,6 +19,22 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to @user, notice: 'User was successfully updated.'
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path, notice: 'User was successfully destroyed.'
   end
 
   private
